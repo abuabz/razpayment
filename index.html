@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Product Store | Dark Theme</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ffffff;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .product-card {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .product-card h2 {
+            font-size: 18px;
+            margin: 12px 0 6px;
+            color: #ffffff;
+        }
+
+        .product-card p {
+            color: #bbb;
+            font-size: 14px;
+        }
+
+        .product-card .price {
+            font-size: 16px;
+            color: #00e676;
+            margin-top: 8px;
+        }
+
+        .product-card button {
+            background-color: #0f8eec;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            margin-top: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+
+        .product-card button:hover {
+            background-color: #0a6fc2;
+        }
+
+        .price-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🛍️ Product Store</h1>
+
+    <div class="products-grid">
+        <!-- Product 1 -->
+        <div class="product-card">
+            <img src="https://everycom.in/assets/img/products/Minitripod/img2.png" alt="Tripod" />
+            <h2>Mini Tripod Stand</h2>
+            <p>Perfect for mobile & vlogging. Lightweight and foldable.</p>
+            <div class="price-grid">
+                <div class="price">₹1</div>
+                <button onclick="startPayment(1, 'Mini Tripod Stand')">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card">
+            <img src="https://www.flashify.in/cdn/shop/files/71r5EgruzPL.jpg?v=1747244479&width=800" alt="Speaker" />
+            <h2>Bluetooth Speaker</h2>
+            <p>Portable and powerful. Enjoy wireless music anywhere.</p>
+            <div class="price-grid">
+                <div class="price">₹10</div>
+                <button onclick="startPayment(10, 'Bluetooth Speaker')">Buy Now</button>
+            </div>
+
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card">
+            <img src="https://m.media-amazon.com/images/I/41UMUdeigrL._SX300_SY300_QL70_FMwebp_.jpg   "
+                alt="Smart Watch" />
+            <h2>Smart Watch</h2>
+            <p>Track your fitness and notifications on the go.</p>
+            <div class="price-grid">
+                <div class="price">₹25</div>
+                <button onclick="startPayment(25, 'Smart Watch')">Buy Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function startPayment(amountINR, productName) {
+            const amountPaise = amountINR * 100;
+
+            var options = {
+                key: "rzp_test_6YtLCGFVyvt4SS", // Your Razorpay Test Key
+                amount: amountPaise,
+                currency: "INR",
+                name: "My Store",
+                description: productName,
+                handler: function (response) {
+                    alert("Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
+                    window.location.href = "thankyou.html";
+                },
+                prefill: {
+                    name: "Customer",
+                    email: "customer@example.com",
+                    contact: "9123456789"
+                },
+                theme: {
+                    color: "#0f8eec"
+                }
+            };
+
+            const rzp = new Razorpay(options);
+            rzp.open();
+        }
+    </script>
+
+</body>
+
+</html>
